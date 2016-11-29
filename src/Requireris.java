@@ -14,16 +14,17 @@ public class Requireris {
             Scanner sc = new Scanner(System.in);
             String secret = sc.nextLine();
 
-            String digit = "0";
+            String digit;
             System.out.println("Choose digit (t = totp):");
             digit = sc.nextLine();
 
             HOTP generator;
             if (!digit.equals("t")) {
-                generator = new HOTP(secret.toUpperCase(), Long.parseLong(digit));
+                long dig = Long.parseLong(digit);
+                generator = new HOTP(secret.toUpperCase(), dig);
             } else {
                 Date d = new Date();
-                generator = new HOTP(secret.toUpperCase(), d.getTime() / 30);
+                generator = new HOTP(secret.toUpperCase(), (d.getTime() / 1000) / 30);
             }
             System.out.println(generator.generateOTP());
         } catch (Exception e) {
